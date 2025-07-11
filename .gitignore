@@ -1,0 +1,106 @@
+# 编译文件
+l2tp-manager
+l2tp-manager.exe
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 测试文件
+*.test
+
+# 输出文件
+*.out
+
+# Go workspace文件
+go.work
+
+# 依赖目录
+vendor/
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+l2tp_manager.db
+
+# 日志文件
+*.log
+app.log
+
+# 配置文件（包含敏感信息）
+.env
+config.json
+config.yaml
+config.yml
+
+# PID文件
+*.pid
+l2tp-manager.pid
+
+# 缓存目录
+.cache/
+tmp/
+temp/
+
+# IDE和编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 备份文件
+*.bak
+*.backup
+backup_*.db
+
+# 证书文件
+*.pem
+*.key
+*.crt
+*.cert
+
+# 密钥文件
+private_key*
+public_key*
+*.rsa
+*.dsa
+
+# 生成的文件
+dist/
+build/
+release/
+
+# 测试覆盖率
+*.coverage
+coverage.html
+coverage.out
+
+# 性能分析文件
+*.prof
+cpu.prof
+mem.prof
+
+# 文档生成文件
+docs/_build/
+*.pdf
+
+# 打包文件
+*.tar.gz
+*.zip
+*.rar
+
+# 运行时文件
+nohup.out 

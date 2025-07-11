@@ -1,0 +1,26 @@
+# 构建产物
+*.exe
+l2tp-manager
+dist/
+build/
+
+# 数据文件
+*.db
+*.log
+
+# 配置文件
+.env
+
+# 开发文件
+.git
+.vscode
+.idea
+*_test.go
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Docker文件
+Dockerfile*
+docker-compose*.yml 

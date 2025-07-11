@@ -1,0 +1,11 @@
+services:
+  l2tp-manager:
+    build: .
+    container_name: l2tp-manager
+    restart: always
+    network_mode: host
+    environment:
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin123
+    volumes:
+      - ./data:/app/data
