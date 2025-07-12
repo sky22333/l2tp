@@ -966,12 +966,8 @@ class L2TPManager {
     // txt格式
     formatServerConfigToTxt(servers, isDetailed = false) {
         const timestamp = new Date().toLocaleString('zh-CN');
-        let content = `L2TP服务器配置导出文件
+        let content = `导出数量：${servers.length}
 导出时间: ${timestamp}
-服务器数量: ${servers.length}
-导出格式: ${isDetailed ? '详细配置' : '简化配置'}
-
-${'='.repeat(80)}
 
 `;
 
@@ -1015,15 +1011,6 @@ ${'='.repeat(80)}
             
             content += `\n`;
         });
-
-        content += `${'='.repeat(80)}\n`;
-        content += `导出完成 - 共${servers.length}个服务器\n`;
-        content += `导出时间: ${timestamp}\n`;
-        
-            content += `\n说明:\n`;
-        content += `- 请妥善保管此配置文件，其中包含VPN连接凭证\n`;
-            content += `- 中转端口为L2TP服务器监听端口\n`;
-            content += `- L2TP用户配置为VPN连接凭证\n`;
 
         return content;
     }
