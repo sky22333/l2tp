@@ -966,6 +966,10 @@ class L2TPManager {
     // txt格式
     formatServerConfigToTxt(servers, isDetailed = false) {
         const timestamp = new Date().toLocaleString('zh-CN');
+        // 获取系统状态中的IP信息
+        const systemStatus = this.stateManager.getState('systemStatus');
+        const relayIP = systemStatus?.ip || '未知';
+        
         let content = `导出数量：${servers.length}
 导出时间: ${timestamp}
 
@@ -975,7 +979,8 @@ class L2TPManager {
             content += `[${index + 1}] ${server.name}\n`;
             content += `${'-'.repeat(50)}\n`;
             
-            content += `服务器地址: ${server.host}\n`;
+            content += `落地机IP: ${server.host}\n`;
+            content += `中转机IP: ${relayIP}\n`;
             content += `中转端口: ${server.l2tp_port}\n`;
             content += `预共享密钥: ${server.psk || '未设置'}\n`;
             content += `到期时间: ${this.formatDate(server.expire_date)}\n`;
