@@ -355,7 +355,7 @@ class UIRenderer {
                     <strong>总服务器:</strong> ${status.total_servers || 0}
                 </div>
                 <div class="info-item">
-                    <strong>系统运行时间:</strong> ${status.uptime || '未知'}
+                    <strong>服务器信息:</strong> ${status.ip || '未知'} - ${status.location || '未知'}
                 </div>
             </div>
         `;

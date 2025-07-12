@@ -2,9 +2,12 @@ package services
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net"
+	"net/http"
 	"sync"
 	"time"
 
@@ -388,6 +391,59 @@ func (r *RoutingService) GetTrafficStats() map[string]*TrafficStats {
 	return stats
 }
 
+// IPInfo IP信息结构
+type IPInfo struct {
+	IP       string `json:"ip"`
+	City     string `json:"city"`
+	Region   string `json:"region"`
+	Country  string `json:"country"`
+	Location string `json:"loc"`
+	Org      string `json:"org"`
+}
+
+// getIPInfo 获取IP信息
+func (r *RoutingService) getIPInfo() map[string]interface{} {
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+	
+	resp, err := client.Get("https://ipinfo.io")
+	if err != nil {
+		log.Printf("获取IP信息失败: %v", err)
+		return map[string]interface{}{
+			"ip":       "获取失败",
+			"location": "获取失败",
+		}
+	}
+	defer resp.Body.Close()
+	
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Printf("读取IP信息响应失败: %v", err)
+		return map[string]interface{}{
+			"ip":       "读取失败",
+			"location": "读取失败",
+		}
+	}
+	
+	var ipInfo IPInfo
+	if err := json.Unmarshal(body, &ipInfo); err != nil {
+		log.Printf("解析IP信息失败: %v", err)
+		return map[string]interface{}{
+			"ip":       "解析失败",
+			"location": "解析失败",
+		}
+	}
+	
+	// 构建位置信息
+	location := fmt.Sprintf("%s, %s", ipInfo.City, ipInfo.Country)
+	
+	return map[string]interface{}{
+		"ip":       ipInfo.IP,
+		"location": location,
+	}
+}
+
 // GetSystemStatus 获取系统状态
 func (r *RoutingService) GetSystemStatus() map[string]interface{} {
 	r.serverMutex.RLock()
@@ -401,6 +457,9 @@ func (r *RoutingService) GetSystemStatus() map[string]interface{} {
 	activeForwarders := len(r.xrayInstances)
 	r.serverMutex.RUnlock()
 	
+	// 获取IP信息
+	ipInfo := r.getIPInfo()
+	
 	return map[string]interface{}{
 		"total_servers":      totalServers,
 		"running_servers":    runningServers,
@@ -409,7 +468,8 @@ func (r *RoutingService) GetSystemStatus() map[string]interface{} {
 		"forwarder_type":     "xray-dokodemo",
 		"protocol_support":   []string{"UDP", "TCP", "L2TP", "IPSec"},
 		"fullcone_nat":       true,
-		"uptime":            time.Now().Format("2006-01-02 15:04:05"),
+		"ip":                 ipInfo["ip"],
+		"location":           ipInfo["location"],
 	}
 }
 
