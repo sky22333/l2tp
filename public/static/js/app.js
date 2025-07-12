@@ -813,7 +813,7 @@ class L2TPManager {
                 </div>
                 <div class="form-group">
                     <label>密码</label>
-                    <input type="password" class="user-password" value="${password}" placeholder="输入密码" required>
+                    <input type="text" class="user-password" value="${password}" placeholder="输入密码" required>
                 </div>
             </div>
             <button type="button" class="btn btn-danger btn-sm remove-user-btn" onclick="l2tpManager.removeUser(this)">删除</button>
