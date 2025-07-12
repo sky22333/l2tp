@@ -349,7 +349,7 @@ class UIRenderer {
                     <strong>系统状态:</strong> ${status.status || '正常'}
                 </div>
                 <div class="info-item">
-                    <strong>活跃服务器:</strong> ${status.active_servers || 0}
+                    <strong>活跃服务器:</strong> ${status.running_servers || 0}
                 </div>
                 <div class="info-item">
                     <strong>总服务器:</strong> ${status.total_servers || 0}
